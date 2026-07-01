@@ -6,6 +6,21 @@ import { ArrowRight, ChevronRight, CheckCircle2, Shield, MapPin, Truck } from 'l
 
 export default function Home() {
   const [featuredCars, setFeaturedCars] = useState<any[]>([]);
+  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+
+  const heroSlides = [
+    'https://images.unsplash.com/photo-1503376713175-39d6776856c8?q=80&w=2940&auto=format&fit=crop', // Audi
+    'https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=2940&auto=format&fit=crop', // BMW
+    'https://images.unsplash.com/photo-1555353540-64fddefd1a59?q=80&w=2940&auto=format&fit=crop', // Merc
+    'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=2940&auto=format&fit=crop'  // Ferrari
+  ];
+
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(slideInterval);
+  }, [heroSlides.length]);
 
   useEffect(() => {
     async function fetchFeatured() {
@@ -34,20 +49,21 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Cinematic Hero */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-charcoal-900 perspective-1000">
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal-900/80 via-charcoal-900/30 to-charcoal-900 z-10" />
+      <section className="relative h-[95vh] flex items-center justify-center overflow-hidden bg-charcoal-900">
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal-900/60 via-charcoal-900/40 to-charcoal-900 z-10" />
+        <AnimatePresence mode="popLayout">
+          <motion.div 
+            key={currentHeroSlide}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ duration: 1.5, ease: 'easeInOut' }}
+            className="absolute inset-0 bg-cover bg-center mix-blend-luminosity"
+            style={{ backgroundImage: `url(${heroSlides[currentHeroSlide]})` }}
+          />
+        </AnimatePresence>
         
-        {/* Subtle 3D Noise/Grain overlay */}
-        <div className="absolute inset-0 z-10 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
-        
-        <motion.div 
-          animate={{ scale: [1, 1.15] }}
-          transition={{ duration: 25, ease: 'linear', repeat: Infinity, repeatType: 'reverse' }}
-          className="absolute inset-0 bg-cover bg-center mix-blend-luminosity transform-gpu"
-          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=2940&auto=format&fit=crop)' }}
-        />
-        
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full" style={{ transform: 'translateZ(50px)' }}>
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-16 w-full">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -61,18 +77,18 @@ export default function Home() {
             >
               The Standard in Luxury
             </motion.span>
-            <h1 className="text-6xl md:text-8xl lg:text-[9rem] font-display font-black tracking-tighter text-white mb-6 uppercase leading-none italic transform -skew-x-12">
+            <h1 className="text-6xl md:text-8xl lg:text-[9rem] font-display font-black tracking-tighter text-white mb-6 uppercase leading-none italic transform -skew-x-12 flex flex-col items-center">
                <motion.span 
                  initial={{ opacity: 0, x: -100 }}
                  animate={{ opacity: 1, x: 0 }}
                  transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-                 className="inline-block drop-shadow-2xl"
-               >DRIVE</motion.span>{' '}
+                 className="block drop-shadow-2xl"
+               >DRIVE</motion.span>
                <motion.span 
                  initial={{ opacity: 0, x: 100 }}
                  animate={{ opacity: 1, x: 0 }}
                  transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-                 className="text-transparent bg-clip-text bg-gradient-to-br from-red-600 via-red-500 to-red-800 inline-block drop-shadow-[0_10px_30px_rgba(239,68,68,0.8)] outline-title"
+                 className="block text-transparent bg-clip-text bg-gradient-to-br from-red-600 via-red-500 to-red-800 drop-shadow-[0_10px_30px_rgba(239,68,68,0.8)]"
                  style={{ WebkitTextStroke: '2px rgba(255,255,255,0.2)' }}
                >EXCELLENCE</motion.span>
             </h1>
@@ -85,15 +101,10 @@ export default function Home() {
               Curated selection of premium new and tokunbo vehicles in Lagos. Cinematic presentation, uncompromising quality.
             </motion.p>
             
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4"
-            >
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link 
                 to="/inventory"
-                className="group relative px-8 py-4 bg-white text-charcoal-900 font-medium rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] w-full sm:w-auto flex justify-center items-center"
+                className="group relative px-8 py-4 bg-white text-charcoal-900 font-medium rounded-full overflow-hidden transition-all hover:scale-105 w-full sm:w-auto flex justify-center items-center"
               >
                 <span className="relative z-10 flex items-center">
                   View Inventory <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
@@ -101,23 +112,22 @@ export default function Home() {
               </Link>
               <Link 
                 to="/we-buy-cars"
-                className="group px-8 py-4 bg-charcoal-800/80 backdrop-blur-md text-white font-medium rounded-full border border-white/20 hover:border-white/50 transition-all hover:bg-charcoal-700 w-full sm:w-auto flex justify-center items-center"
+                className="px-8 py-4 bg-charcoal-800/80 backdrop-blur-md text-white font-medium rounded-full border border-white/10 hover:bg-charcoal-700 hover:border-white/20 transition-all w-full sm:w-auto flex justify-center items-center"
               >
                 Sell Your Car
               </Link>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
         
         {/* Scroll Indicator */}
         <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 text-silver-400/50 flex flex-col items-center"
         >
-          <span className="text-xs text-silver-400 tracking-widest uppercase mb-2">Scroll</span>
-          <div className="w-[1px] h-12 bg-gradient-to-b from-silver-400 to-transparent" />
+          <span className="text-xs uppercase tracking-widest mb-2 font-medium">Scroll to explore</span>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-silver-400/50 to-transparent" />
         </motion.div>
       </section>
 
