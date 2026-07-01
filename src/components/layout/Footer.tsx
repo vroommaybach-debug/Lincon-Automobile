@@ -6,11 +6,12 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="md:col-span-1">
-            <Link to="/" className="text-2xl font-display font-bold tracking-tighter text-white block mb-4">
-              LINCOLN <span className="text-silver-400">AUTOS</span>
+            <Link to="/" className="text-2xl font-display font-black tracking-tighter uppercase italic transform -skew-x-12 flex items-center w-fit mb-4">
+              <span className="text-white drop-shadow-md">LINCOLN</span> 
+              <span className="ml-1 text-transparent bg-clip-text bg-gradient-to-br from-red-600 via-red-500 to-red-800 drop-shadow-[0_2px_10px_rgba(239,68,68,0.8)]" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>AUTOS</span>
             </Link>
             <p className="text-silver-400 text-sm leading-relaxed">
-              Luxury automotive marketplace for new and tokunbo cars. Curated excellence in Iju Ishaga, Lagos.
+              Luxury automotive marketplace for new and tokunbo cars. Curated excellence in Lagos.
             </p>
           </div>
           
@@ -37,9 +38,9 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-medium mb-4">Visit Us</h4>
             <address className="not-italic text-sm text-silver-400 space-y-2">
-              <p>123 Luxury Avenue</p>
-              <p>Iju Ishaga, Lagos</p>
-              <p>Nigeria</p>
+              <p>Balogun Busstop</p>
+              <p>253, Iju Ishaga Road</p>
+              <p>Iju, Agege, Lagos</p>
               <div className="pt-2">
                 <a href="https://wa.me/2349073796178" className="block hover:text-green-500 transition-colors">+234 907 379 6178 (WhatsApp)</a>
                 <a href="mailto:hello@lincolnautos.com" className="block hover:text-red-500 transition-colors">hello@lincolnautos.com</a>
@@ -50,7 +51,12 @@ export default function Footer() {
         
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-silver-500">
           <p>&copy; {new Date().getFullYear()} Lincoln Autos. All rights reserved.</p>
-          <p className="mt-2 md:mt-0">Drive with confidence.</p>
+          <div className="mt-4 md:mt-0">
+            <span className="font-display font-black tracking-tighter uppercase italic transform -skew-x-12 text-sm md:text-base inline-block">
+              <span className="text-white drop-shadow-md mr-1">IMAGINED BY</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-red-600 via-red-500 to-red-800 drop-shadow-[0_2px_10px_rgba(239,68,68,0.8)]" style={{ WebkitTextStroke: '0.5px rgba(255,255,255,0.2)' }}>JUNESTUDIO</span>
+            </span>
+          </div>
         </div>
       </div>
     </footer>

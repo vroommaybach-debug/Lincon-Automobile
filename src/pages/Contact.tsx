@@ -34,11 +34,10 @@ export default function Contact() {
                <div>
                  <h3 className="text-xl font-medium text-white mb-2">Showroom Location</h3>
                  <p className="text-silver-400 leading-relaxed">
-                   123 Luxury Avenue<br />
-                   Iju Ishaga, Lagos<br />
-                   Nigeria
+                   Balogun Busstop<br />
+                   253, Iju Ishaga Road<br />
+                   Iju, Agege, Lagos
                  </p>
-                 <p className="text-silver-500 text-sm mt-4 italic">Strictly by appointment.</p>
                </div>
             </div>
 
@@ -98,6 +97,22 @@ export default function Contact() {
                 Send Message
               </button>
             </form>
+          </div>
+        </div>
+        
+        {/* Map Section */}
+        <div className="mt-24">
+          <h2 className="text-3xl font-display font-bold text-white mb-8 text-center">Locate Us</h2>
+          <div className="w-full h-[400px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+            <iframe 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade" 
+              src="https://maps.google.com/maps?q=253,+Iju+Ishaga+Road,+Iju,+Agege,+Lagos&t=&z=15&ie=UTF8&iwloc=&output=embed">
+            </iframe>
           </div>
         </div>
 

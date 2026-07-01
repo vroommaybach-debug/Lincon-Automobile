@@ -25,12 +25,14 @@ export default function Home() {
   useEffect(() => {
     async function fetchFeatured() {
       try {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('cars')
           .select('*, car_media(url, is_cover)')
-          .eq('featured', true)
+          .order('created_at', { ascending: false })
           .limit(3);
-        if (data) setFeaturedCars(data);
+        if (data && data.length > 0) {
+          setFeaturedCars(data);
+        }
       } catch (error) {
         // Handle gracefully
       }
@@ -171,7 +173,9 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {displayCars.map((car, i) => {
-               const cover = car.car_media?.find((m:any) => m.is_cover) || car.car_media?.[0] || { url: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1000' };
+               const coverUrl = (car.car_media && car.car_media.length > 0) 
+                  ? (car.car_media.find((m:any) => m.is_cover)?.url || car.car_media[0].url) 
+                  : 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1000';
                return (
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
@@ -182,7 +186,7 @@ export default function Home() {
                   className="group rounded-3xl bg-charcoal-800 border border-white/5 overflow-hidden hover:border-red-500/30 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] flex flex-col h-full"
                 >
                   <div className="aspect-[4/3] bg-charcoal-700 relative overflow-hidden">
-                    <img src={cover.url} alt={`${car.year} ${car.make}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <img src={coverUrl} alt={`${car.year} ${car.make}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute top-4 left-4">
                       <span className="px-3 py-1 bg-charcoal-900/80 backdrop-blur-md rounded-full text-xs font-medium text-white uppercase tracking-widest border border-white/10">
                         {car.condition}
@@ -215,9 +219,91 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* About Section */}
+      <section className="py-32 bg-charcoal-900 border-t border-white/5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-charcoal-800 to-transparent z-0" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-sm font-medium text-red-500 uppercase tracking-widest mb-3">Our Legacy</h2>
+              <h3 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">Driven By Perfection</h3>
+              <p className="text-silver-400 text-lg mb-6 leading-relaxed">
+                Lincoln Autos is Lagos' premier destination for luxury and exotic vehicles. With years of experience serving discerning clients, we source, verify, and deliver the world's most sought-after cars.
+              </p>
+              <p className="text-silver-400 text-lg mb-8 leading-relaxed">
+                Whether you're looking for a pristine brand-new model or a carefully vetted Tokunbo vehicle, our commitment to transparency, quality, and white-glove service remains unmatched.
+              </p>
+              <div className="flex gap-4">
+                <div className="border-l-2 border-red-500 pl-4">
+                  <p className="text-3xl font-display font-bold text-white">500+</p>
+                  <p className="text-silver-400 text-sm">Cars Delivered</p>
+                </div>
+                <div className="border-l-2 border-red-500 pl-4">
+                  <p className="text-3xl font-display font-bold text-white">100%</p>
+                  <p className="text-silver-400 text-sm">Client Satisfaction</p>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
+            >
+              <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=2000" alt="Showroom" className="w-full h-full object-cover" />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-32 bg-charcoal-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">Client Experiences</h2>
+            <p className="text-silver-400 text-lg flex items-center justify-center gap-2">
+               Verified reviews from our Google Profile 
+               <span className="text-yellow-500 flex">
+                 {'★★★★★'.split('').map((star, i) => <span key={i}>{star}</span>)}
+               </span>
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { name: "Oluwaseun Adebayo", review: "Incredible service from start to finish. They sourced my Mercedes GLE within a week and the condition was exactly as promised. Highly recommend Lincoln Autos.", date: "2 weeks ago" },
+              { name: "Chinedu Eze", review: "The most transparent dealership I've dealt with in Lagos. No hidden fees, the car was pristine, and their delivery team was very professional.", date: "1 month ago" },
+              { name: "Aisha Mohammed", review: "Bought a tokunbo Lexus. It looked and felt brand new. They handled all the paperwork and even delivered it to Abuja for me. Top tier!", date: "3 months ago" }
+            ].map((testimonial, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-charcoal-900 p-8 rounded-3xl border border-white/5 relative shadow-xl hover:border-white/20 transition-all"
+              >
+                <div className="text-yellow-500 mb-4 text-xl">★★★★★</div>
+                <p className="text-silver-300 italic mb-6 leading-relaxed">"{testimonial.review}"</p>
+                <div className="flex items-center justify-between mt-auto">
+                  <div>
+                    <p className="text-white font-medium">{testimonial.name}</p>
+                    <p className="text-silver-500 text-sm">Google Review</p>
+                  </div>
+                  <span className="text-silver-500 text-sm">{testimonial.date}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
       
       {/* Trust & Delivery Section */}
-      <section className="py-32 bg-charcoal-800 border-t border-white/5">
+      <section className="py-32 bg-charcoal-900 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div 

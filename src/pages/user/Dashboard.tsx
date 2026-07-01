@@ -12,16 +12,24 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function fetchData() {
-      if (!profile) return;
+      if (!profile) {
+        setLoading(false);
+        return;
+      }
       
-      const [listingsData, deliveriesData] = await Promise.all([
-        supabase.from('listings_requests').select('*').eq('user_id', profile.id).order('created_at', { ascending: false }),
-        supabase.from('delivery_requests').select('*').eq('user_id', profile.id).order('created_at', { ascending: false })
-      ]);
+      try {
+        const [listingsData, deliveriesData] = await Promise.all([
+          supabase.from('listings_requests').select('*').eq('user_id', profile.id).order('created_at', { ascending: false }),
+          supabase.from('delivery_requests').select('*').eq('user_id', profile.id).order('created_at', { ascending: false })
+        ]);
 
-      if (listingsData.data) setListings(listingsData.data);
-      if (deliveriesData.data) setDeliveries(deliveriesData.data);
-      setLoading(false);
+        if (listingsData.data) setListings(listingsData.data);
+        if (deliveriesData.data) setDeliveries(deliveriesData.data);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchData();
   }, [profile]);
