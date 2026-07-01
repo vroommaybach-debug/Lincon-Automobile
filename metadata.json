@@ -1,0 +1,6 @@
+{
+  "name": "Lincoln Autos",
+  "description": "Luxury automotive marketplace for new and tokunbo cars in Lagos, Nigeria.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
