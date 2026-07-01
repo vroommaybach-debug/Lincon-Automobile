@@ -163,7 +163,7 @@ export default function CarDetail() {
           <div className="lg:col-span-4 space-y-8">
             
             {/* Action Card */}
-            <div className="bg-charcoal-800 rounded-3xl p-8 border border-white/5 sticky top-28 shadow-2xl">
+            <div className="bg-charcoal-800 rounded-3xl p-8 border border-white/5 shadow-2xl">
               <h3 className="text-xl font-display font-semibold text-white mb-6">Acquire this vehicle</h3>
               
               <div className="space-y-4">

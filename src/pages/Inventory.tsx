@@ -95,7 +95,7 @@ export default function Inventory() {
           
           {/* Filters Sidebar */}
           <div className={`lg:col-span-1 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-            <div className="bg-charcoal-800 border border-white/5 rounded-3xl p-6 sticky top-28">
+            <div className="bg-charcoal-800 border border-white/5 rounded-3xl p-6 lg:sticky lg:top-28">
               <div className="flex justify-between items-center mb-6 lg:hidden">
                 <h2 className="text-xl font-display font-semibold text-white">Filters</h2>
                 <button onClick={() => setShowFilters(false)}><X size={20} className="text-silver-400" /></button>

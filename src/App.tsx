@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './store/useAuth';
+import ScrollToTop from './components/ScrollToTop';
 
 // Layout
 import RootLayout from './components/layout/RootLayout';
@@ -45,6 +46,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route element={<RootLayout />}>
           <Route path="/" element={<Home />} />

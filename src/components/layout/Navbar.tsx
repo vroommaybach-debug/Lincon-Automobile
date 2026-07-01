@@ -21,13 +21,13 @@ export default function Navbar() {
           
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <Link to="/inventory" className="text-silver-300 hover:text-white transition-colors">Inventory</Link>
+              <Link to="/inventory" className="text-silver-300 hover:text-red-400 transition-colors">Inventory</Link>
               {user && (
                 <Link to="/accessories" className="text-silver-300 hover:text-red-400 transition-colors">Accessories</Link>
               )}
-              <Link to="/sell-your-car" className="text-silver-300 hover:text-white transition-colors">Sell Your Car</Link>
-              <Link to="/we-buy-cars" className="text-silver-300 hover:text-white transition-colors">We Buy Cars</Link>
-              <Link to="/delivery" className="text-silver-300 hover:text-white transition-colors">Delivery</Link>
+              <Link to="/sell-your-car" className="text-silver-300 hover:text-red-400 transition-colors">Sell Your Car</Link>
+              <Link to="/we-buy-cars" className="text-silver-300 hover:text-red-400 transition-colors">We Buy Cars</Link>
+              <Link to="/delivery" className="text-silver-300 hover:text-red-400 transition-colors">Delivery</Link>
             </div>
           </div>
           
@@ -35,7 +35,7 @@ export default function Navbar() {
             {user ? (
               <Link 
                 to={isAdmin ? "/admin" : "/dashboard"} 
-                className="flex items-center space-x-2 text-silver-300 hover:text-white transition-colors"
+                className="flex items-center space-x-2 text-silver-300 hover:text-red-400 transition-colors"
               >
                 <UserIcon size={20} />
                 <span>{isAdmin ? 'Admin' : 'Dashboard'}</span>
@@ -43,7 +43,7 @@ export default function Navbar() {
             ) : (
               <Link 
                 to="/login"
-                className="px-6 py-2 bg-charcoal-700 text-white rounded-full font-medium hover:bg-charcoal-600 transition-colors border border-white/10"
+                className="px-6 py-2 bg-red-600 text-white rounded-full font-medium hover:bg-red-500 transition-colors shadow-[0_0_15px_rgba(239,68,68,0.4)]"
               >
                 Log In
               </Link>
